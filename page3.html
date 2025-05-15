@@ -92,43 +92,24 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      transform: rotate(45deg);
-      animation: floatHeart 6s linear infinite;
-      opacity: 0.7;
+    .emoji-heart {
+      position: fixed;
+      top: 100vh;
+      font-size: 24px;
+      animation: floatEmoji 6s linear infinite;
+      opacity: 0.9;
+      z-index: 9999;
+      pointer-events: none;
+      filter: drop-shadow(0 0 5px #ff69b4);
     }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes floatHeart {
+    @keyframes floatEmoji {
       0% {
-        transform: translateY(0) rotate(45deg);
+        transform: translateY(0);
         opacity: 1;
       }
       100% {
-        transform: translateY(-100vh) rotate(45deg);
+        transform: translateY(-120vh);
         opacity: 0;
       }
     }
@@ -141,9 +122,6 @@
     <p class="typed-text" id="typedText"></p>
     <button class="btn-next" id="nextBtn" style="display: none;" onclick="goToPage4()">Tell me your answer</button>
   </div>
-
-  <!-- Floating hearts container -->
-  <div id="hearts-container"></div>
 
   <!-- Music and sound -->
   <audio id="bgMusic" loop>
@@ -190,10 +168,11 @@ I’ve said what’s in my heart… now I just need to know—could you ever fee
       document.getElementById("playBtn").style.display = "none";
     }
 
-    // Floating hearts
-    function createHearts() {
+    // Floating emoji hearts
+    function createEmojiHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
+      heart.classList.add("emoji-heart");
+      heart.innerText = "💖";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = 4 + Math.random() * 3 + "s";
       document.body.appendChild(heart);
@@ -202,9 +181,8 @@ I’ve said what’s in my heart… now I just need to know—could you ever fee
       }, 7000);
     }
 
-    setInterval(createHearts, 500);
+    setInterval(createEmojiHeart, 300);
 
-    // Run typing effect
     typeWriter();
   </script>
 </body>
