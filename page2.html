@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You’re Amazing</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: backgroundAnimation 15s infinite alternate;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 50px;
+      border-radius: 30px;
+      text-align: center;
+      max-width: 700px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: fadeIn 1.5s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3.5em;
+      color: #ba68c8;
+      text-shadow: 0 0 12px #ff9ce2, 0 0 20px #ff69b4;
+      animation: pulse 2s infinite alternate;
+    }
+
+    p {
+      font-size: 1.5em;
+      color: #6a1b9a;
+      margin: 20px 0;
+    }
+
+    #typing1, #typing2 {
+      min-height: 60px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 1.1em;
+      background: #ba68c8;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 15px rgba(186, 104, 200, 0.5);
+      display: none;
+    }
+
+    button:hover {
+      background: #9c27b0;
+      transform: scale(1.05);
+    }
+
+    .heart-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5; /* ensures hearts float above text */
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 40px;
+      color: #ff0033;
+      animation: floatUp 5s linear forwards;
+      opacity: 0.9;
+      text-shadow: 0 0 8px #ff3366, 0 0 14px #ff0033;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.6;
+      animation: sparkleAnimation 2s infinite ease-in-out;
+      z-index: 4;
+    }
+
+    .sparkle:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { left: 50%; animation-delay: 1.2s; }
+    .sparkle:nth-child(3) { left: 80%; animation-delay: 2.4s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      from { text-shadow: 0 0 10px #ff9ce2; }
+      to { text-shadow: 0 0 20px #ff69b4; }
+    }
+
+    @keyframes floatUp {
+      0% { bottom: -50px; opacity: 0; }
+      50% { opacity: 1; }
+      100% { bottom: 100vh; opacity: 0; }
+    }
+
+    @keyframes sparkleAnimation {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0; transform: scale(0.8); }
+    }
+
+    @keyframes backgroundAnimation {
+      0% { background: linear-gradient(to right, #fbc2eb, #a6c1ee); }
+      50% { background: linear-gradient(to left, #fbc2eb, #a6c1ee); }
+      100% { background: linear-gradient(to right, #fbc2eb, #a6c1ee); }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart-container" id="heartContainer"></div>
+
+  <div class="sparkle">✦</div>
+  <div class="sparkle">✦</div>
+  <div class="sparkle">✦</div>
+
+  <div class="box">
+    <h1 id="greeting"></h1>
+    <p id="typing1"></p>
+    <p id="typing2"></p>
+    <button id="nextBtn" onclick="goToNext()">Tell me more</button>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("herName") || "you";
+    document.getElementById("greeting").textContent = `Hi ${name}!`;
+
+    const text1 = "Just wanted to say something... You are genuinely one of the kindest and most amazing people I’ve ever known.";
+    const text2 = "And I have a tiny surprise waiting for you...";
+
+    let i = 0, j = 0;
+    const typing1 = document.getElementById("typing1");
+    const typing2 = document.getElementById("typing2");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function typeFirst() {
+      if (i < text1.length) {
+        typing1.innerHTML += text1.charAt(i);
+        i++;
+        setTimeout(typeFirst, 35);
+      } else {
+        setTimeout(typeSecond, 500);
+      }
+    }
+
+    function typeSecond() {
+      if (j < text2.length) {
+        typing2.innerHTML += text2.charAt(j);
+        j++;
+        setTimeout(typeSecond, 40);
+      } else {
+        nextBtn.style.display = "inline-block";
+      }
+    }
+
+    function goToNext() {
+      window.location.href = "page3.html";
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "♥";
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.fontSize = `${30 + Math.random() * 20}px`;
+      document.getElementById("heartContainer").appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 250);
+    window.onload = typeFirst;
+  </script>
+</body>
+</html>

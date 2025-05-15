@@ -1,0 +1,156 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Your Answer</title>  
+  <style>  
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');  
+  
+    body {  
+      margin: 0;  
+      padding: 0;  
+      font-family: 'Poppins', sans-serif;  
+      background: linear-gradient(to right, #ffe6f0, #e0c3fc);  
+      color: #333;  
+      display: flex;  
+      justify-content: center;  
+      align-items: center;  
+      height: 100vh;  
+      overflow: hidden;  
+      position: relative;  
+      text-align: center;  
+    }  
+  
+    .message-box {  
+      max-width: 700px;  
+      padding: 40px;  
+      background: rgba(255, 255, 255, 0.9);  
+      border-radius: 25px;  
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);  
+      z-index: 10;  
+      position: relative;  
+    }  
+  
+    h1 {  
+      font-family: 'Pacifico', cursive;  
+      font-size: 2.5em;  
+      color: #d81b60;  
+      text-shadow: 0 0 8px #ffb6f2;  
+      animation: glow 2s infinite alternate;  
+    }  
+  
+    .btn-group {  
+      margin-top: 30px;  
+    }  
+  
+    .btn {  
+      background-color: #d81b60;  
+      color: white;  
+      border: none;  
+      padding: 12px 28px;  
+      margin: 0 15px;  
+      font-size: 1.1em;  
+      border-radius: 25px;  
+      cursor: pointer;  
+      transition: 0.3s ease;  
+      box-shadow: 0 5px 20px rgba(216, 27, 96, 0.5);  
+    }  
+  
+    .btn:hover {  
+      background-color: #ad1457;  
+      transform: scale(1.05);  
+    }  
+  
+    .confirmation-btn {  
+      background-color: #4caf50;  
+      color: white;  
+      border: none;  
+      padding: 12px 28px;  
+      font-size: 1.1em;  
+      border-radius: 25px;  
+      cursor: pointer;  
+      margin-top: 25px;  
+      box-shadow: 0 5px 15px rgba(0, 128, 0, 0.5);  
+      display: none;  
+    }  
+  
+    .confirmation-btn:hover {  
+      background-color: #45a049;  
+      transform: scale(1.05);  
+    }  
+  
+    .heart {  
+      position: fixed;  
+      font-size: 24px;  
+      animation: floatUp 5s linear forwards;  
+      z-index: 9999;  
+      color: red;  
+      filter: drop-shadow(0 0 5px red) drop-shadow(0 0 15px red);  
+    }  
+  
+    @keyframes floatUp {  
+      0% {  
+        transform: translateY(0);  
+        opacity: 1;  
+      }  
+      100% {  
+        transform: translateY(-100vh);  
+        opacity: 0;  
+      }  
+    }  
+  
+    @keyframes glow {  
+      from { text-shadow: 0 0 5px #ffb6f2; }  
+      to { text-shadow: 0 0 15px #ff69b4; }  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div class="message-box">  
+    <h1>So... Do you feel the same way about me?</h1>  
+    <div class="btn-group">  
+      <button class="btn" onclick="selectAnswer('yes')">Yes</button>  
+      <button class="btn" onclick="selectAnswer('no')">No</button>  
+    </div>  
+    <button id="confirmationBtn" class="confirmation-btn" onclick="confirmAnswer()">Confirm</button>  
+  </div>  
+  
+  <script>  
+    let heartInterval;  
+    let selectedAnswer = null;  
+  
+    function createHeart() {  
+      const heart = document.createElement("div");  
+      heart.className = "heart";  
+      heart.innerText = "❤️";  
+      heart.style.left = Math.random() * window.innerWidth + "px";  
+      heart.style.top = window.innerHeight + "px";  
+      heart.style.fontSize = (16 + Math.random() * 20) + "px";  
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";  
+      document.body.appendChild(heart);  
+      setTimeout(() => heart.remove(), 5000);  
+    }  
+  
+    function startHeartEffect() {  
+      heartInterval = setInterval(createHeart, 200);  
+    }  
+  
+    function selectAnswer(answer) {  
+      selectedAnswer = answer;  
+      document.getElementById("confirmationBtn").style.display = "inline-block";  
+    }  
+  
+    function confirmAnswer() {  
+      clearInterval(heartInterval);  
+      if (selectedAnswer === 'yes') {  
+        window.location.href = "yes.html";  
+      } else if (selectedAnswer === 'no') {  
+        window.location.href = "no.html";  
+      }  
+    }  
+  
+    startHeartEffect();  
+  </script>  
+</body>  
+</html>

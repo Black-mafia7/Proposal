@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hey You...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #ff9efb;
+      animation: fadeIn 1.5s ease-in-out, glow 2s infinite alternate;
+    }
+
+    p {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 30px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    input {
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      font-size: 18px;
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 24px;
+      background: #ff6f91;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      animation: fadeIn 3s ease-in-out, pulse 1.5s infinite;
+    }
+
+    button:hover {
+      background: #ff4e7a;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(255, 111, 145, 0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ffb6f2; }
+      to { text-shadow: 0 0 15px #ff69b4; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 5s linear forwards;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: -10px; top: 0; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Hey there!</h1>
+  <p>Before we go on, can I know your beautiful name?</p>
+  <input type="text" id="herName" placeholder="Type your name..." />
+  <br>
+  <button onclick="nextPage()">Next</button>
+
+  <script>
+    function nextPage() {
+      const name = document.getElementById('herName').value;
+      if (name.trim() !== "") {
+        localStorage.setItem('herName', name);
+        window.location.href = "page2.html";
+      } else {
+        alert("Please enter your name first!");
+      }
+    }
+
+    // Floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.bottom = "0px";
+      heart.style.animationDuration = (4 + Math.random() * 2) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Truth</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .message-box {
+      max-width: 750px;
+      padding: 50px 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 30px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: floatUp 1s ease;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      color: #d81b60;
+      font-size: 2.8em;
+      text-shadow: 0 0 8px #ffb6f2;
+      animation: glow 2s infinite alternate;
+    }
+
+    .typed-text {
+      font-size: 1.3em;
+      color: #6a1b9a;
+      margin-top: 30px;
+      white-space: pre-wrap;
+      min-height: 200px;
+      line-height: 1.8;
+    }
+
+    .btn-next {
+      margin-top: 40px;
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 5px 20px rgba(216, 27, 96, 0.5);
+    }
+
+    .btn-next:hover {
+      background-color: #ad1457;
+      transform: scale(1.05);
+    }
+
+    #playBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ff4f81;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      font-size: 1em;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ffb6f2; }
+      to { text-shadow: 0 0 15px #ff69b4; }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: floatHeart 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="message-box">
+    <h1 id="greeting"></h1>
+    <p class="typed-text" id="typedText"></p>
+    <button class="btn-next" id="nextBtn" style="display: none;" onclick="goToPage4()">Tell me your answer</button>
+  </div>
+
+  <!-- Floating hearts container -->
+  <div id="hearts-container"></div>
+
+  <!-- Music and sound -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2023/02/21/audio_524da49917.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickSound">
+    <source src="https://cdn.pixabay.com/audio/2022/08/04/audio_9b7d72cd88.mp3" type="audio/mpeg">
+  </audio>
+
+  <button onclick="startMusic()" id="playBtn">Play Music</button>
+
+  <script>
+    const name = localStorage.getItem("crushName") || "you";
+    document.getElementById("greeting").textContent = `Hey ${name}, just one more thing...`;
+
+    const text = `There’s something I’ve been meaning to say for a long time...
+
+I don’t know when it started… I tried to ignore it, to push it away… but the truth is—I like you.
+
+I’ve said what’s in my heart… now I just need to know—could you ever feel the same way about me?`;
+
+    let i = 0;
+    const speed = 40;
+
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("typedText").textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        document.getElementById("nextBtn").style.display = "inline-block";
+      }
+    }
+
+    function goToPage4() {
+      document.getElementById("clickSound").play();
+      setTimeout(() => {
+        window.location.href = "page4.html";
+      }, 400);
+    }
+
+    function startMusic() {
+      document.getElementById("bgMusic").play();
+      document.getElementById("playBtn").style.display = "none";
+    }
+
+    // Floating hearts
+    function createHearts() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(createHearts, 500);
+
+    // Run typing effect
+    typeWriter();
+  </script>
+</body>
+</html>
