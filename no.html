@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Still Friends</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      color: #444;
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 700px;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      color: #e63946;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    #typing-text {
+      font-size: 1.3em;
+      line-height: 1.8;
+      color: #333;
+      white-space: pre-wrap;
+      border-right: 2px solid #e63946;
+      display: inline-block;
+      animation: typingCursor 1s steps(1) infinite;
+      max-width: 100%;
+    }
+
+    .glow-char {
+      animation: glow 2s ease-in-out infinite alternate;
+      display: inline;
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 26px;
+      animation: floatUp 6s linear infinite;
+      z-index: 3;
+      color: #e63946;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ffa6a6; }
+      to { text-shadow: 0 0 15px #e63946; }
+    }
+
+    @keyframes typingCursor {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #e63946; }
+    }
+  </style>
+</head>
+<body>
+  <div class="message-box">
+    <h1>That's totally okay!</h1>
+    <p id="typing-text"></p>
+  </div>
+
+  <script>
+    const text = "I completely understand and respect your feelings.\nNo matter what happens, we'll always be friends!";
+    const container = document.getElementById('typing-text');
+    let index = 0;
+
+    function type() {
+      if (index < text.length) {
+        const char = text[index];
+
+        if (char === '\n') {
+          container.appendChild(document.createElement('br'));
+        } else {
+          const span = document.createElement('span');
+          span.textContent = char;
+          if (char.trim() !== "") {
+            span.classList.add('glow-char');
+          }
+          container.appendChild(span);
+        }
+
+        index++;
+        setTimeout(type, 50); // typing speed
+      }
+    }
+
+    type();
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💔";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = window.innerHeight + "px";
+      heart.style.fontSize = (20 + Math.random() * 10) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 2) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
