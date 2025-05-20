@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You Said Yes!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffe6f0, #e0c3fc);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #d81b60;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px pink;
+      margin-bottom: 30px;
+    }
+
+    .slideshow {
+      width: 250px;
+      height: 230px;
+      position: relative;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      clip-path: path("M125 220 Q30 150 60 70 Q80 20 125 50 Q170 20 190 70 Q220 150 125 220 Z");
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 0 10px #ff69b4;
+      border-radius: 20px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .message {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #444;
+      max-width: 500px;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>You said YES!</h1>
+
+  <div class="slideshow">
+    <div class="slide active"><img src="1.jpg" alt="Image 1"></div>
+    <div class="slide"><img src="2.jpg" alt="Image 2"></div>
+    <div class="slide"><img src="3.jpg" alt="Image 3"></div>
+    <div class="slide"><img src="4.jpg" alt="Image 4"></div>
+    <div class="slide"><img src="5.jpg" alt="Image 5"></div>
+    <div class="slide"><img src="6.jpg" alt="Image 6"></div>
+    <div class="slide"><img src="7.jpg" alt="Image 7"></div>
+  </div>
+
+  <div class="message">
+    Thank you for saying yes! You made my day.
+  </div>
+
+  <audio autoplay loop>
+    <source src="background_music.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 2500);
+  </script>
+
+</body>
+</html>
